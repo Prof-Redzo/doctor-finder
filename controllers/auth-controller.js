@@ -1,19 +1,18 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import User from "../models/User.js"
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    await client.connect();
-    const database = client.db('doctor-finder');
-    const users = database.collection('users');
-
-    const user = await users.findOne({ username });
+   
+    const user = await User.findOne({ username });
+    console.log(user);
     if (!user) {
       return res.status(401).send('Invalid username or password');
     }
-
+    
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).send('Invalid username or password');
@@ -21,7 +20,7 @@ export const login = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
-      JWT_KEY,
+      process.env.JWT_KEY,
       { expiresIn: '1h' }
     );
 
@@ -30,6 +29,6 @@ export const login = async (req, res) => {
     console.error(error);
     res.status(500).send('Internal Server Error');
   } finally {
-    await client.close();
+
   }
 };
