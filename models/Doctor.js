@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema({
+const doctorSchema = mongoose.Schema({
     username: String,
     password: String,
     role: String,
@@ -8,6 +8,6 @@ const userSchema = mongoose.Schema({
     updatedAt: {type: Date, default: new Date()}
 });  
 
-const User = mongoose.model("User", userSchema);
+const Doctor = mongoose.model("Doctor", doctorSchema);
 
-export default User;
+export default Doctor;
