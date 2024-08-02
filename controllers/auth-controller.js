@@ -38,13 +38,13 @@ export const registerDoctor = async (req, res) => {
     
     const doctorExists = await Doctor.findOne({ username: data.username });
     if (doctorExists) {
-      return res.status(403).send("Doctor with that email already exists");
+      return res.status(403).send("Doctor with that username already exists");
     }
 
     const hashedPassword = await bcrypt.hash(data.password, parseInt(process.env.SALT_ROUNDS));
     data.password = hashedPassword;
 
-    const newDoctor = Doctor(data);
+    const newDoctor = newDoctor(data);
     const result = await newDoctor.save();
 
     return res.status(201).send("Doctor created successfully!");
