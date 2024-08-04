@@ -44,7 +44,7 @@ export const registerDoctor = async (req, res) => {
     const hashedPassword = await bcrypt.hash(data.password, parseInt(process.env.SALT_ROUNDS));
     data.password = hashedPassword;
 
-    const newDoctor = newDoctor(data);
+    const newDoctor = new Doctor(data);
     const result = await newDoctor.save();
 
     return res.status(201).send("Doctor created successfully!");
