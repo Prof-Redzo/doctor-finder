@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js"
-import Doctor from "../models/Doctor.js"
+import User from "../models/User.js";
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
@@ -36,16 +35,16 @@ export const registerDoctor = async (req, res) => {
   const data = req.body;
   try {
     
-    const doctorExists = await Doctor.findOne({ username: data.username });
-    if (doctorExists) {
+    const user = await User.findOne({ username: data.username });
+    if (user) {
       return res.status(403).send("Doctor with that username already exists");
     }
 
     const hashedPassword = await bcrypt.hash(data.password, parseInt(process.env.SALT_ROUNDS));
     data.password = hashedPassword;
 
-    const newDoctor = new Doctor(data);
-    const result = await newDoctor.save();
+    const newUser = new User(data);
+    const result = await newUser.save();
 
     return res.status(201).send("Doctor created successfully!");
 

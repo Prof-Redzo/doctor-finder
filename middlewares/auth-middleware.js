@@ -8,7 +8,7 @@ const authenticate =  async (req, res, next) => {
   }
 
   try{
-    const decoded = jwt.authenticate(token, process.env.JWT_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
     req.user = decoded;
     next();
   }catch(e){

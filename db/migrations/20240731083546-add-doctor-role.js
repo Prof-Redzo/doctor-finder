@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 
 export async function up(db, client) {
   const hashedPassword = await bcrypt.hash('12345678', 10);
-  await db.collection('doctors').insertOne({
-    username,
+  await db.collection('users').insertOne({
+    username: "Bob-doctor",
     password: hashedPassword,
     role: 'doctor',
     createdAt: new Date(),
@@ -12,5 +12,5 @@ export async function up(db, client) {
 }
 
 export async function down(db, client) {
-  await db.collection('doctors').deleteOne({ username: '' });
+  await db.collection('users').deleteOne({ username: 'Bob-doctor' });
 }
