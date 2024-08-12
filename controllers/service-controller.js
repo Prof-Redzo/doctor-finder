@@ -18,3 +18,8 @@ export const createService = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+export const getService = async (req, res) => {
+  const services = await Service.find({});
+  res.status(200).send(services);
+}
