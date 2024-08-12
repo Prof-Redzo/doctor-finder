@@ -1,11 +1,7 @@
 import Service from "../models/Service.js";
 
 export const createService = async (req, res) => {
-  const { name, description, price, roleToValidate } = req.body;
-
-  if (req.user.role !== roleToValidate) {
-    return res.status(403).send("Forbidden");
-  }
+  const { name, description, price } = req.body;
 
   try {
     const service = new Service({
