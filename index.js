@@ -1,6 +1,7 @@
 import express from 'express';
 import "dotenv/config";
-import router from './routes/auth-routes.js';
+import authRouter from './routes/auth-routes.js';
+import serviceRouter from "./routes/service-routes.js";
 import bodyParser from 'body-parser';
 import mongoose from "mongoose";
 
@@ -16,7 +17,8 @@ const connectToDb = async () => {
   connectToDb().then(() => console.log("Connected"))
   .catch((err) => console.log(err));
 
-app.use(router);
+app.use(authRouter);
+app.use(serviceRouter);
 
 app.listen(PORT, () => {
   console.log("Listening on port:" + PORT);
